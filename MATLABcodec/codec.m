@@ -50,16 +50,18 @@ switch blockOption
 end
 
 %Quantization option
-i_quant = 2;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
+i_quant = 1;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
 switch i_quant
     case 0
-        quant_step = 1;  % 1-255
+        quant_step = 2;  % 1-255
         fprintf("uniform quantization\tquant_step=%d\n",quant_step);
     case 1
-        quant_factor = 1; % 1-100
+        quant_factor = 100; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n",quant_factor);
     case 2
-        quant_array = [10 20 30 40];   % your quantization array
+        %quant_array = [10 20 30 40];   % your quantization array
+        Layers=128;
+        NumofIter=1000;
         fprintf("custom quantization\n");
 end
 
@@ -187,11 +189,13 @@ switch i_quant
         end
         procImage = uint8(procImage);
         h_proc = figure('name', 'Quant Image', 'NumberTitle', 'off');
-        imshow(procImage);
+        imshow(uint8(procImage));
         % bit count
         bitCount = HuffmanCoding(huffOri, huffIdx);
         fprintf("Processed image bit:%d\n",bitCount);
     case 2
+        % 求个分层电平
+        quant_array=LloydMax(srcImage,Layers,NumofIter);
         %%customed quantization
         img_width = size(procImage, 2);
         img_height = size(procImage, 1);
@@ -334,7 +338,7 @@ end
 %%%%%%%%%%%% Save Proc File %%%%%%%%%%%%%%%
 if ~isempty(procImage)
     %save the processed image into file
-    imwrite(procImage, 'procImage.bmp');
+    imwrite(uint8(procImage), 'procImage.bmp');
     disp("save the processed image correctly.")
 else
     disp("Quantize the image first!");
