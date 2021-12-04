@@ -50,16 +50,16 @@ switch blockOption
 end
 
 %Quantization option
-i_quant = 0;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
+i_quant = 2;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
 switch i_quant
     case 0
-        quant_step = 1;   % 1-255
+        quant_step = 1;  % 1-255
         fprintf("uniform quantization\tquant_step=%d\n",quant_step);
     case 1
         quant_factor = 1; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n",quant_factor);
     case 2
-        quant_array = [10, 20, 30, 40];   % your quantization array
+        quant_array = [10 20 30 40];   % your quantization array
         fprintf("custom quantization\n");
 end
 
@@ -249,7 +249,7 @@ switch i_quant
             end
         end
         h_proc = figure('name', 'Quant Image', 'NumberTitle', 'off');
-        imshow(procImage);
+        imshow(uint8(procImage));
         % bit count
         bitCount = HuffmanCoding(huffOri, length(quant_array)+1);
         fprintf("Processed image bit:%d\n",bitCount);
