@@ -42,5 +42,7 @@ function [DelaminateVolt, RebuildVolt] = LloydMax(InputImage, Layers, NumofIter)
             DelaminateVolt(t) = (RebuildVolt(t) + RebuildVolt(t - 1)) / 2;
         end
 
-        DelaminateVolt=ceil(sort(DelaminateVolt));  %取个整数
+        DelaminateVolt = ceil(sort(DelaminateVolt)); %取个整数
     end
+
+end
