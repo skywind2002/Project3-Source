@@ -1,3 +1,13 @@
+# codec
+## VLC 编码完成后得到的编码码流 one|twoSymbolEncode.m产生
+MATLABcodec/bin.txt
+## processed image 量化后的图片 codec.m产生
+MATLABcodec/procImage.bmp
+## reconstructed image 恢复后的图片 codec.m产生
+MATLABcodec/recImage.bmp
+## 量化与恢复图片的差异 one|twoSymbolEncode.m产生
+diff_proc_rec.bmp
+
 # macOS
 .DS_Store
 
