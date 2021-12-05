@@ -26,7 +26,7 @@ function [huffmanSymbols, huffmanCodes] = h_Huffman(symbols, probabilities)
     while flag ~= 1
         flag = flag - 1;
         % fprintf("flag = %d\n", flag))
-        
+
         [~, I] = sort(probabilitiesArray, 'ascend'); % I(1) and I(2) are the index of smallest probabilities
         % fprintf("I(1) = %d, I(2) = %d\n", I(1), I(2))
 
@@ -41,7 +41,7 @@ function [huffmanSymbols, huffmanCodes] = h_Huffman(symbols, probabilities)
         end
 
         % combine two nodes into one
-        symbolsCell{I(1)} = [symbolsCell{I(1)}, symbols(I(2))];
+        symbolsCell{I(1)} = [symbolsCell{I(1)}, symbolsCell{I(2)}];
         probabilitiesArray(I(1)) = probabilitiesArray(I(1)) + probabilitiesArray(I(2));
         symbolsCell{I(2)} = []; % not that neccessary, just clear value on the position
         probabilitiesArray(I(2)) = 2; % neccessary, a value bigger than one
