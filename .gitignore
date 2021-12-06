@@ -7,6 +7,9 @@ MATLABcodec/procImage.bmp
 MATLABcodec/recImage.bmp
 ## 量化与恢复图片的差异 one|twoSymbolEncode.m产生
 diff_proc_rec.bmp
+## 码本
+table.txt
+table2.txt
 
 # macOS
 .DS_Store

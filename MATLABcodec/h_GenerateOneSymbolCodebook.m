@@ -26,15 +26,19 @@ function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
     end
 
     newSymbols = sortedSymbols(thresholdPosition:length(sortedSymbols));
-    newSymbols = [newSymbols, -1];
+    newSymbols = [newSymbols, -1]; % add escape
     newProbs = sortedProbs(thresholdPosition:length(sortedSymbols));
-    newProbs = [newProbs, sum(sortedProbs(1:(thresholdPosition - 1)))];
-
+    newProbs = [newProbs, sum(sortedProbs(1:(thresholdPosition - 1)))]; % add escape
     [huffmanSymbols, huffmanCodes] = h_Huffman(newSymbols, newProbs);
-    % huffmanSymbols
-    % huffmanCodes
-    disp(length(newSymbols))
-    for i = 1:length(huffmanSymbols)
-        fprintf("%d %s\n", huffmanSymbols(i), huffmanCodes(i))
+    fprintf("huffmanSymbols.len = %d\n", length(huffmanSymbols));
+
+    code_tabel_file = fopen('table.txt', 'w');
+
+    for i = 1:(length(huffmanSymbols) - 1)
+        fprintf(code_tabel_file, "%d %s\n", huffmanSymbols(i), huffmanCodes(i));
     end
+
+    fprintf(code_tabel_file, "%s", huffmanCodes(length(huffmanSymbols)));
+
+    fclose(code_tabel_file);
 end
