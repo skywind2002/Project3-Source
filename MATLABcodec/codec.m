@@ -71,7 +71,7 @@ end
 vlcRadio = 1; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
 twosymbol_coodbook_file = "table2.txt";
-escape_prob_threshold = 0.9;
+escape_prob_threshold = 0.99;
 twosymbol_decode_file = "double_data.txt";
 
 if vlcRadio == 0
