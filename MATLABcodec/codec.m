@@ -380,11 +380,23 @@ if (isempty(num_1) && isempty(code_1)) && (isempty(num_2_1) && isempty(num_2_2) 
     return;
 end
 
+% channelEncode & Decode
+f = fopen('bin.txt', 'r');
+message = fscanf(f, '%s') - '0';
+fclose(f);
+[samplePoints, raisedcos] = h_channelEncode(message);
+SNR = 10; % dB
+samplePoints = awgn(samplePoints, SNR, 'measured');
+message_with_noise = h_channelDecode(samplePoints, raisedcos);
+f = fopen('bin_with_noise.txt', 'w');
+fprintf(f, '%s', char(message_with_noise+'0'));
+fclose(f);
+
 if vlcRadio == 0 || vlcRadio == 1
 
     if vlcRadio == 0 % one symbol decode
 
-        recImage = oneSymbolDecode('bin.txt', num_1, code_1, blockOption, ...
+        recImage = oneSymbolDecode('bin_with_noise.txt', num_1, code_1, blockOption, ...
             srcImage, procImage, slice_start_code);
 
     else
@@ -392,7 +404,7 @@ if vlcRadio == 0 || vlcRadio == 1
         if mod(size(srcImage, 2), 2) == 1
             disp("Change another image with even pixs width!");
         else
-            recImage = twoSymbolDecode('bin.txt', num_2_1, num_2_2, code_2, blockOption, ...
+            recImage = twoSymbolDecode('bin_with_noise.txt', num_2_1, num_2_2, code_2, blockOption, ...
                 srcImage, procImage, slice_start_code);
 
         end
