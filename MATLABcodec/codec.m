@@ -58,7 +58,7 @@ switch i_quant
         quant_step = 2; % 1-255
         fprintf("uniform quantization\tquant_step=%d\n", quant_step);
     case 1
-        quant_factor = 1; % 1-100
+        quant_factor = 50; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n", quant_factor);
     case 2
         %quant_array = [10 20 30 40];   % your quantization array
@@ -70,6 +70,7 @@ end
 %VLC option
 vlcRadio = 0; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
+escape_prob_threshold = 0.8;
 twosymbol_coodbook_file = "table2.txt";
 twosymbol_decode_file = "double_data.txt";
 
@@ -347,7 +348,9 @@ code_2 = [];
 
 if vlcRadio == 0 || vlcRadio == 1
 
-    if vlcRadio == 0
+    if vlcRadio == 0 % one symbol encode
+        h_GenerateOneSymbolCodebook(procImage, escape_prob_threshold);
+        fprintf("escape_prob_threshold = %f\n", escape_prob_threshold);
         [num_1, code_1] = oneSymbolEncode(onesymbol_coodbook_file, blockOption, srcImage, procImage, slice_start_code);
     else
 
@@ -377,7 +380,8 @@ end
 
 if vlcRadio == 0 || vlcRadio == 1
 
-    if vlcRadio == 0 % one symbol encoding
+    if vlcRadio == 0 % one symbol decode
+
         recImage = oneSymbolDecode('bin.txt', num_1, code_1, blockOption, ...
             srcImage, procImage, slice_start_code);
 
