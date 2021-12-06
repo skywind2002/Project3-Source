@@ -133,7 +133,7 @@ function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
 运行结果：
 
 | escape_prob_threshold | huffman_symbols_count | encode_bits |
-| - | - |
+| - | - | - |
 | 0.00 | 240 | 124852 |
 | 0.01 | 201 | 124608 |
 | 0.1 | 149 | 126508 |
