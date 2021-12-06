@@ -121,10 +121,10 @@ function [symbols, probs] = h_ProbStatistic(srcImage)
 % [output]
 % generate table.txt in the current folder
 
-function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
+function h_GenerateCodebook(srcImage, escape_prob_threshold, symbol_count)
 ```
 
-测试文件为`test_GenerateOneSymbolCondebook.m`，其中`escape_prob_threshold`指定了需要被逃逸编码的符号的总概率。
+测试文件为`test_GenerateCondebook.m`，其中`escape_prob_threshold`指定了需要被逃逸编码的符号的总概率。
 
 ### 单符号测试结果
 
@@ -151,6 +151,4 @@ function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
 
 ### 双符号思路
 
-TODO
-仍然采用上述思路，但联合时要注意应该是相近的。。。
-等下双符号是怎么解码的？？？
+双符号意味着对偶数列的图像左右相邻的两个像素进行联合编码。仍然采用上述思路，先进行统计再根据门限值生成码本。

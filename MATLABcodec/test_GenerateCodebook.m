@@ -6,4 +6,4 @@ load("originalImage.mat"); % srcImage
 
 escape_prob_threshold = 0.9;
 
-h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold);
+h_GenerateCodebook(srcImage, escape_prob_threshold, 1);

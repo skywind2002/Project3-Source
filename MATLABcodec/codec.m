@@ -70,8 +70,8 @@ end
 %VLC option
 vlcRadio = 0; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
-escape_prob_threshold = 0.8;
 twosymbol_coodbook_file = "table2.txt";
+escape_prob_threshold = 0.9;
 twosymbol_decode_file = "double_data.txt";
 
 if vlcRadio == 0
@@ -349,7 +349,7 @@ code_2 = [];
 if vlcRadio == 0 || vlcRadio == 1
 
     if vlcRadio == 0 % one symbol encode
-        h_GenerateOneSymbolCodebook(procImage, escape_prob_threshold);
+        h_GenerateCodebook(procImage, escape_prob_threshold, 1);
         fprintf("escape_prob_threshold = %f\n", escape_prob_threshold);
         [num_1, code_1] = oneSymbolEncode(onesymbol_coodbook_file, blockOption, srcImage, procImage, slice_start_code);
     else

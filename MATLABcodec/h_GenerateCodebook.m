@@ -5,7 +5,7 @@
 % [output]
 % generate table.txt in the current folder
 
-function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
+function h_GenerateCodebook(srcImage, escape_prob_threshold, symbol_count)
     [symbols, probs] = h_ProbStatistic(srcImage);
     % probs
     [~, I] = sort(probs, 'ascend');
@@ -32,13 +32,28 @@ function h_GenerateOneSymbolCodebook(srcImage, escape_prob_threshold)
     [huffmanSymbols, huffmanCodes] = h_Huffman(newSymbols, newProbs);
     fprintf("huffmanSymbols.len = %d\n", length(huffmanSymbols));
 
-    code_tabel_file = fopen('table.txt', 'w');
+    switch symbol_count
+        case 1
+            code_tabel_file = fopen('table.txt', 'w');
 
-    for i = 1:(length(huffmanSymbols) - 1)
-        fprintf(code_tabel_file, "%d %s\n", huffmanSymbols(i), huffmanCodes(i));
+            for i = 1:(length(huffmanSymbols) - 1)
+                fprintf(code_tabel_file, "%d %s\n", huffmanSymbols(i), huffmanCodes(i));
+            end
+
+        case 2
+            code_tabel_file = fopen('table2.txt', 'w');
+
+            for i = 1:(length(huffmanSymbols) - 1)
+                symbol_high = floor(huffmanSymbols(i) / 256);
+                symbol_low = mod(huffmanSymbols(i), 256);
+                fprintf(code_tabel_file, "%d %d %s\n", symbol_high, symbol_low, huffmanCodes(i));
+            end
+
+        otherwise
+            assert(0, "symbol_count not supported")
     end
 
-    fprintf(code_tabel_file, "%s", huffmanCodes(length(huffmanSymbols)));
+    fprintf(code_tabel_file, "%s", huffmanCodes(length(huffmanSymbols))); % escape
 
     fclose(code_tabel_file);
 end
