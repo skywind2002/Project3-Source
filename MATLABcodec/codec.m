@@ -68,7 +68,7 @@ switch i_quant
 end
 
 %VLC option
-vlcRadio = 0; % 0:one symbol 1:two connected symbols
+vlcRadio = 1; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
 twosymbol_coodbook_file = "table2.txt";
 escape_prob_threshold = 0.9;
@@ -357,6 +357,8 @@ if vlcRadio == 0 || vlcRadio == 1
         if mod(size(srcImage, 2), 2) == 1
             disp("Please change another image with even pixs width!\n");
         else
+            h_GenerateCodebook(procImage, escape_prob_threshold, 2);
+            fprintf("escape_prob_threshold = %f\n", escape_prob_threshold);
             [num_2_1, num_2_2, code_2] = twoSymbolEncode(twosymbol_coodbook_file, blockOption, srcImage, procImage, slice_start_code);
         end
 

@@ -6,8 +6,8 @@
 % generate table.txt in the current folder
 
 function h_GenerateCodebook(srcImage, escape_prob_threshold, symbol_count)
-    [symbols, probs] = h_ProbStatistic(srcImage);
     % probs
+    [symbols, probs] = h_ProbStatistic(srcImage, symbol_count);
     [~, I] = sort(probs, 'ascend');
     sortedSymbols = symbols(I);
     sortedProbs = probs(I);

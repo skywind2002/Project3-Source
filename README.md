@@ -79,7 +79,7 @@ Two symbol encode:	Encode success!	 Total bits:137116
 % 输出
 % 符号Array
 % 概率Array
-function [symbols, probs] = h_ProbStatistic(srcImage)
+function [symbols, probs] = h_ProbStatistic(srcImage, symbol_count)
 ```
 
 ### 单符号逃逸码设计思路
