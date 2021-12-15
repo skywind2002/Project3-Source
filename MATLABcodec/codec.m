@@ -315,10 +315,7 @@ psnrArray = psnrCalculate(blockOption, srcImage, procImage);
 disp("Quantization success!");
 
 %VLC coding
-slice_start_code = '111111110000000011111111';
-% slice_start_code = '101010101010101010101010';
-% slice_start_code = '010101010101010101010101';
-% slice_start_code = '100000000000000000000001';
+slice_start_code = '011111111111111111111110';
 flag = 0;
 
 for m = 1:length(slice_start_code)

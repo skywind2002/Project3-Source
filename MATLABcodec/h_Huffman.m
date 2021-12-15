@@ -47,4 +47,5 @@ function [huffmanSymbols, huffmanCodes] = h_Huffman(symbols, probabilities)
         probabilitiesArray(I(2)) = 2; % neccessary, a value bigger than one
     end
 
+    huffmanCodes = '0' + huffmanCodes;
 end
