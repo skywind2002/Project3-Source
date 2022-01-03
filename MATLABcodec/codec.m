@@ -19,15 +19,15 @@
 %          promote products derived from this software without specific prior written permission.
 % % % % % % % % % % % % % % % % % % % % % %
 
-clc
-clear
-close all
+% clc
+% clear
+% close all
 
 %%%%%%%%%% parameter setting %%%%%%%%%%%%%
 %%%%% quantitation %%%%%%%%%%
 %%%%% chose quantitation and the corresponding parameter %%%%%%
 %block policy option
-blockOption = 2;
+% blockOption = 2;
 
 switch blockOption
     case 0
@@ -58,7 +58,7 @@ switch i_quant
         quant_step = 2; % 1-255
         fprintf("uniform quantization\tquant_step=%d\n", quant_step);
     case 1
-        quant_factor = 50; % 1-100
+        % quant_factor = 50; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n", quant_factor);
     case 2
         %quant_array = [10 20 30 40];   % your quantization array
@@ -71,7 +71,7 @@ end
 vlcRadio = 1; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
 twosymbol_coodbook_file = "table2.txt";
-escape_prob_threshold = 0.99;
+escape_prob_threshold = 0.9;
 twosymbol_decode_file = "double_data.txt";
 
 if vlcRadio == 0
@@ -82,7 +82,9 @@ end
 
 %%%%%%%%%%%% Open File%%%%%%%%%%%%%%%%%%%%%
 b_FileStat = false; %indicate whether the file is load correctly or not
-[fileName, pathName] = uigetfile('*'); %load the image via GUI
+% [fileName, pathName] = uigetfile('*'); %load the image via GUI
+fileName = 'lena_128_bw.bmp';
+pathName = 'D:\Documents\Lessons\2021Autumn\编码引论\作业\作业三\MATLABcodec\';
 srcImage = imread(strcat(pathName, fileName));
 infoSrcImage = imfinfo(strcat(pathName, fileName));
 
@@ -382,7 +384,7 @@ f = fopen('bin.txt', 'r');
 message = fscanf(f, '%s') - '0';
 fclose(f);
 [samplePoints, raisedcos] = h_channelEncode(message);
-SNR = 10; % dB
+% SNR = 3; % dB
 samplePoints = awgn(samplePoints, SNR, 'measured');
 message_with_noise = h_channelDecode(samplePoints, raisedcos);
 f = fopen('bin_with_noise.txt', 'w');
