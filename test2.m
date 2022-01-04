@@ -32,11 +32,23 @@ PSNRs(:, :, 2)= [
 vlcRadios = [1, 0];
 
 figure; hold on;
-errorbar(lengths(2:end, 1), mean(PSNRs(:, 2:end, 1), 1), std(PSNRs(:, 2:end, 1), 1), 'LineWidth', 2)
+errorbar(lengths(2:end, 1), mean(PSNRs(:, 2:end, 1), 1), std(PSNRs(:, 2:end, 1), 1), '*-', 'LineWidth', 2)
 errorbar(lengths(1, 1), mean(PSNRs(:, 1, 1), 1), std(PSNRs(:, 1, 1), 1), '*-', 'LineWidth', 2)
 legend(["blockOption = 1~5", "blockOption = 0"])
 xlabel('bit stream/bit')
 ylabel('PSNR/dB')
 title('R-D Graph(H.261 量化，量化参数 50，双符号编码)')
-imwrite(frame2im(getframe(gcf)), "R-D图_quant_factor50_vlcRadios1.png")
 hold off;
+grid on;
+imwrite(frame2im(getframe(gcf)), "实验记录(数据+图像)\信源信道联合编码\双符号errorbar.png")
+
+figure; hold on;
+errorbar(lengths(2:end, 2), mean(PSNRs(:, 2:end, 2), 1), std(PSNRs(:, 2:end, 2), 1), '*-', 'LineWidth', 2)
+errorbar(lengths(1, 2), mean(PSNRs(:, 1, 2), 1), std(PSNRs(:, 1, 2), 1), '*-', 'LineWidth', 2)
+legend(["blockOption = 1~5", "blockOption = 0"])
+xlabel('bit stream/bit')
+ylabel('PSNR/dB')
+title('R-D Graph(H.261 量化，量化参数 50，单符号编码)')
+hold off;
+grid on;
+imwrite(frame2im(getframe(gcf)), "实验记录(数据+图像)\信源信道联合编码\单符号errorbar.png")

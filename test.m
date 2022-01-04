@@ -95,11 +95,16 @@ SNR = [-Inf, 5, 7, 8, 9, 10, +Inf];
 lengths = [148648, 146363, 136148, 132511];
 
 figure; hold on;
-for i = 1:7
-    errorbar(lengths, mean(PSNRs(:, :, i), 1), std(PSNRs(:, :, i), 1), 'LineWidth', 2)
+errorbar(lengths, mean(PSNRs(:, :, 1), 1), std(PSNRs(:, :, 1), 1), '--', 'LineWidth', 2)
+for i = 2:6
+    errorbar(lengths, mean(PSNRs(:, :, i), 1), std(PSNRs(:, :, i), 1), '*-', 'LineWidth', 2)
 end
-legend('SNR = ' + string(SNR))
+errorbar(lengths, mean(PSNRs(:, :, 7), 1), std(PSNRs(:, :, 7), 1), '--', 'LineWidth', 2)
+legend('SNR = ' + string(SNR), 'location', 'northwest')
 xlabel('bit stream/bit')
 ylabel('PSNR/dB')
 title('R-P Graph（H.261 量化，量化参数分别取 100/50/10/5）')
 hold off;
+grid on;
+
+imwrite(frame2im(getframe(gcf)), "实验记录(数据+图像)\信源信道联合编码\基准曲线.png")
