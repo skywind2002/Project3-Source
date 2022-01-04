@@ -106,5 +106,5 @@ ylabel('PSNR/dB')
 title('R-P Graph（H.261 量化，量化参数分别取 100/50/10/5）')
 hold off;
 grid on;
-
+xlim(lengths([end,1]))
 imwrite(frame2im(getframe(gcf)), "实验记录(数据+图像)\信源信道联合编码\基准曲线.png")
