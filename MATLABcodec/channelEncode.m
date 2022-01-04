@@ -1,5 +1,4 @@
 SK_way = 'PSK';
-SK_M = 8;
 f_low = 300; omega_low = f_low * 2 * pi;
 f_high = 3400; omega_high = f_high * 2 * pi;
 f_0 = (f_high + f_low) / 2; omega_0 = f_0 * 2 * pi;
@@ -14,18 +13,18 @@ if rem(length(message), 12) ~= 0
     message = [message, repmat([0], 1, 12 - rem(length(message), 12))];
 end
 
-n = log2(SK_M); k = 1; m = 4;
+if(conv_mode == 3)
+    SK_M = 8; n = 3; k = 1; m = 4;
+    A = cat(3, [1 1 1], [1 0 1], [0 1 1], [1 1 1]);
+elseif(conv_mode == 2)
+    SK_M = 4; n = 2; k = 1; m = 4;
+    A = cat(3, [1 1], [0 1], [1 1], [1 1]);
+end
 
-A = cat(3, [1 1 1], [1 0 1], [0 1 1], [1 1 1]);
-zero_begin = 1; 
-zero_end = 1; 
-p = 2; 
-viterbi_mode = 1; 
 disp("Conv Encoding...")
-conv_encoded_message = conv_encode(message, n, k, m, A, zero_begin, zero_end, p);
+conv_encoded_message = conv_encode(message, n, k, m, A, 1, 1, 2);
 
 r = 1;
-amplitude_range = [-r * 1.5, r * 1.5];
 a_n = PSK(conv_encoded_message, SK_M, r);
 
 t_start = 0; t_end = Ts * length(a_n) * 1.2;

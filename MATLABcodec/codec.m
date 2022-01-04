@@ -58,10 +58,10 @@ switch i_quant
         quant_step = 2; % 1-255
         fprintf("uniform quantization\tquant_step=%d\n", quant_step);
     case 1
-        quant_factor = 50; % 1-100
+        %quant_factor = 50; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n", quant_factor);
     case 2
-        %quant_array = [10 20 30 40];   % your quantization array
+        quant_array = [10 20 30 40];   % your quantization array
         Layers = 128;
         NumofIter = 1000;
         fprintf("custom quantization\n");
@@ -383,11 +383,13 @@ end
 f = fopen('bin.txt', 'r');
 message = fscanf(f, '%s') - '0';
 fclose(f);
-
+message_length = length(message);
 channelEncode; % 得到连续波形 transfer_wave
+message = message(1:message_length);
 % SNR = 3; % dB
 receive_wave = awgn(transfer_wave, SNR, 'measured'); 
 channelDecode; % 得到 message_with_noise
+message_with_noise = message_with_noise(1:message_length);
 
 f = fopen('bin_with_noise.txt', 'w');
 fprintf(f, '%s', char(message_with_noise+'0'));
