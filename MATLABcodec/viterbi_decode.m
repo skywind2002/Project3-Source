@@ -23,7 +23,10 @@ function decode = viterbi_decode(r, n, k, m, A, mode, p, distance)
     n_state = p^(m - 1); % 米利机状态数，p种情形在输入中，p^{m-1} 种情形在状态中
     state = dec2base(0:n_state - 1, p, m - 1) - '0'; % n_state * (m-1) 矩阵，每一行对应一个长度为 m-1 的状态
     total_dis = [0, Inf + zeros(1, n_state - 1)]'; % 总距离。因为从状态为 0 开始，所以取第一个为 0、其余的为 Inf。
-    route = zeros(n_state, size(r, 2)); % 存储最优路径，每一行都是一条走到相应 state 的最优路径。
+    L = 128;
+    begin_index = 1;
+    route = zeros(n_state, L); % 存储最优路径，每一行都是一条走到相应 state 的最优路径。
+    decode = zeros(1, size(r, 2));
 
     for i = 1:size(r, 2)
         input = r(:, i).'; % 当前处理的输入
@@ -51,13 +54,17 @@ function decode = viterbi_decode(r, n, k, m, A, mode, p, distance)
             index = mod(tmp(end) - 1, n_state) + 1;
             route_k = route(index, :);
             input_k = full_input(state_k);
-            next_route(s, 1:i) = [route_k(1:i - 1), input_k(I(1))];
+            next_route(s, 1:end) = [route_k(2:end), input_k(I(1))];
         end
 
+        if(i >L)
+            decode(begin_index) = route(1);
+            begin_index = begin_index + 1;
+        end
         route = next_route;
         total_dis = next_dis;
         % disp("route"); disp(route);
     end
 
-    decode = route(1, :);
+    decode(begin_index:(begin_index+L-1)) = route(1, 1:end);
 end
